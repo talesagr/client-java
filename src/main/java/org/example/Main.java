@@ -13,11 +13,9 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        String serverIP = "192.168.0.110"; // Substituir pelo endereço IP do servidor
-        int port = 1234;
+        if(args == null || args.length != 2) throw new IllegalArgumentException("passe o IP e a PORTA do server");
 
-        try {
-            Socket socket = new Socket(serverIP, port);
+        try (Socket socket = new Socket(args[0], Integer.parseInt(args[1]))){
 
             ObjectMapper objectMapper = new ObjectMapper();
 
@@ -37,12 +35,8 @@ public class Main {
 
             out.println(json);
 
-//            String answerJson = in.readLine();
-//            System.out.println("Server answer: " + answerJson);
-
             in.close();
             out.close();
-            socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }    }
